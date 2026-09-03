@@ -36,6 +36,9 @@ add wave -noupdate -radix decimal /tb_systolic_array/dut/g_row[3]/g_col[3]/u_pe/
 add wave -noupdate -radix decimal -color yellow \
     /tb_systolic_array/dut/g_row[3]/g_col[3]/u_pe/acc_out
 
+add wave -noupdate -divider {result matrix - readable, one signal per element}
+add wave -noupdate -radix decimal /tb_systolic_array/c_view
+
 configure wave -namecolwidth 300
 configure wave -valuecolwidth 80
 configure wave -signalnamewidth 1

@@ -36,6 +36,22 @@ module tb_systolic_array;
 
     always #5 clk = ~clk;
 
+    // ---- debug view -----------------------------------------------------
+    // c_flat is a 512-bit packed bus - unreadable in a waveform. This unpacks
+    // it into a 2-D array so each result can be waved individually as
+    // c_view[i][j]. Testbench only: costs nothing, synthesizes to nothing.
+    //     add wave /tb_systolic_array/c_view
+    wire signed [ACC_WIDTH-1:0] c_view [0:N-1][0:N-1];
+    genvar gi, gj;
+    generate
+        for (gi = 0; gi < N; gi = gi + 1) begin : g_view_row
+            for (gj = 0; gj < N; gj = gj + 1) begin : g_view_col
+                assign c_view[gi][gj] =
+                    $signed(c_flat[(gi*N + gj)*ACC_WIDTH +: ACC_WIDTH]);
+            end
+        end
+    endgenerate
+
     systolic_array #(
         .N          (N),
         .DATA_WIDTH (DATA_WIDTH),
